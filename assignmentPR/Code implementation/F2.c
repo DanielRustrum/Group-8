@@ -142,7 +142,75 @@ bool subtract(int c1, int n1, int d1,
               int c2, int n2, int d2,
               char result[], int len)
 {
+    //base case, not enough to store characteristic
+    if(len <= 1)
+    {
+        return false;
+    }
+    
+    // Initialize and Setup Variables
+    int sizeNeeded = ((n1 + n2) / 10) + 1;
+    int resultArrIndex = 0;
+    int tempArrIndex = 0;
+    int numLSD1;
+    int numLSD2;
+    int numResult;
+    int tempResult[sizeNeeded];
+    int charResult = c1 - c2;
+    bool carry = false;
 
+    result[resultArrIndex] = (char) charResult;
+    resultArrIndex++;
+    result[resultArrIndex] = '.';
+    
+    //loop while denominators are not zero, takes off the end of each
+    //numerator, then subtracts them
+    //update: divide denominators by 10
+    
+    while((d1 > 0 || d2 > 0) && tempArrIndex < len - 1)
+    {
 
+        numLSD1 = n1 % 10;
+        numLSD2 = n2 % 10;
 
+        numResult = numLSD1 - numLSD2;
+
+        if(carry)
+        {
+            numResult++;
+            carry = false;
+        }
+
+        if(numResult > 9)
+        {
+            numResult %= 10;
+            carry = true;
+        }
+
+        tempResult[tempArrIndex] = numResult;
+
+        tempArrIndex++;
+        d1 /= 10;
+        d2 /= 10;
+
+        n1 /= 10;
+        n2 /= 10;
+
+    }
+
+    
+    // Pass result into resulting array
+    while(resultArrIndex < len - 1)
+    {
+
+        result[resultArrIndex] = (char) tempResult[tempArrIndex];
+        resultArrIndex++;
+        tempArrIndex--;
+
+    }
+
+    // Add end char to end of array
+    result[resultArrIndex] = '\0';
+
+    return true;
 }
