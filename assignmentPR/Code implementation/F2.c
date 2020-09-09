@@ -1,12 +1,47 @@
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stdio.h>
 #include "F2.h"
 
 
 
 //--------------Main program---------------\\
 
+int main()
+{
+
+    char answer[100];
+    int c1, n1, d1;
+    int c2, n2, d2;
+    int index = 0;
+
+    c1 = 1;
+    n1 = 1;
+    d1 = 2;
+
+    c2 = 2;
+    n2 = 2;
+    d2 = 3;
+
+        //if the C string could hold at least the characteristic
+    if(add(c1, n1, d1, c2, n2, d2, answer, 100))
+    {
+        while(answer[index] != '\0')
+        {
+            printf(answer[index]);
+            index++;
+        }
+    }
+    else
+    {
+        printf("Array size was not large enough");
+    }
 
 
 
+
+    return 0;
+}
 
 
 //-------------Functions---------------\\
@@ -30,7 +65,7 @@ bool add(int c1, int n1, int d1,
   }
 
   int sizeNeeded = ((n1 + n2) / 10) + 1;
-  int resultArrindex = 0;
+  int resultArrIndex = 0;
   int tempArrIndex = 0;
   int numLSD1;
   int numLSD2;
@@ -41,14 +76,14 @@ bool add(int c1, int n1, int d1,
 
 
 
-  result[resultArrindex] = (char) charResult;
-  resultArrindex++;
-  result[resultArrindex] = '.';
+  result[resultArrIndex] = (char) charResult;
+  resultArrIndex++;
+  result[resultArrIndex] = '.';
 
   //loop while denominators are not zero, takes off the end of each
   //numerator, then adds them
   //update: divide denominators by 10
-  while(d1 > 0 || d2 > 0)
+  while((d1 > 0 || d2 > 0) && tempArrIndex < len - 1)
   {
 
     numLSD1 = n1 % 10;
